@@ -207,6 +207,31 @@ async function logOut() {
 
   alert("You've logged out!");
 }
+async function updateProfileName() {
+  const { data: { user } } = await supabaseClient.auth.getUser();
+  const name = document.getElementById('profileName');
+
+  if (name) {
+    name.textContent = user
+      ? (user.user_metadata?.display_name || user.email.split('@')[0])
+      : 'Guest';
+  }
+}
+
+supabaseClient.auth.onAuthStateChange(
+  (_event, session) => {
+    const name = document.getElementById('profileName');
+    if (name) {
+      const user = session?.user;
+      name.textContent = user
+        ? (user.user_metadata?.display_name ||
+           user.email?.split('@')[0] || 'User')
+        : 'Guest';
+    }
+  }
+);
+
+updateProfileName();
 </script>
 
 </body></html>
