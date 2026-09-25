@@ -159,11 +159,65 @@ function invest(song,amount){
  if(sv<amount){toast('Not enough SV');return}
  sv-=amount;invested+=amount;document.getElementById('sv').textContent=sv.toLocaleString();document.getElementById('available').textContent=sv.toLocaleString()+' SV';document.getElementById('invested').textContent=invested.toLocaleString()+' SV';toast('Invested '+amount+' SV in '+song)
 }
-function publish(){
- const n=document.getElementById('songName').value||'Untitled track';
- const f=document.getElementById('audioFile').files[0];
- const s=document.getElementById('uploadStatus');s.style.display='block';s.textContent='Demo published: '+n+(f?' · '+f.name:'');toast('Track published')
+
+async function publish() {
+  const title = document.getElementById('songName').value.trim();
+  const file = document.getElementById('audioFile').files[0];
+  const status = document.getElementById('uploadStatus');
+
+  const { data: { user } } = await supabaseClient.auth.getUser();
+
+  if (!user) {
+    alert('Please log in before uploading music.');
+    return;
+  }
+
+  if (!title || !file) {
+    alert('Enter a song title and choose an audio file.');
+    return;
+  }
+
+  const artist = document.querySelector(
+    '#upload input[placeholder="Artist name"]'
+  ).value.trim();
+
+  if (!artist) {
+    alert('Please enter an artist name.');
+    return;
+  }
+
+  const path = `${user.id}/${crypto.randomUUID()}-${file.name}`;
+
+  status.style.display = 'block';
+  status.textContent = 'Uploading your song...';
+
+  const { error: uploadError } = await supabaseClient.storage
+    .from('Songs')
+    .upload(path, file);
+
+  if (uploadError) {
+    status.textContent = uploadError.message;
+    return;
+  }
+
+  const { error: dbError } = await supabaseClient
+    .from('songs')
+    .insert({
+      user_id: user.id,
+      title: title,
+      artist: artist,
+      file_path: path
+    });
+
+  if (dbError) {
+    status.textContent = dbError.message;
+    return;
+  }
+
+  status.textContent = 'Your song was published!';
+  alert('Song uploaded successfully!');
 }
+
 function search(){const q=document.getElementById('searchInput').value.trim();toast(q?'Searching for '+q:'Type something to search')}
 </script>
 
