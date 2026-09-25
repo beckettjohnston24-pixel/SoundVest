@@ -35,7 +35,48 @@ nav{position:fixed;bottom:0;left:0;right:0;height:72px;background:#0c0c10ee;bord
 <body>
 <div class="app">
 <header class="top"><div class="logo">Sound<span>Vest</span></div><div class="wallet">◈ <b id="sv">10,000</b> SV</div></header>
-<main>
+
+<div style="display:flex;gap:10px;padding:12px">
+  <button onclick="showAuth('login')">Log In</button>
+  <button onclick="showAuth('signup')">Sign Up</button>
+</div>
+
+<div id="authBox" style="display:none;padding:15px">
+  <h2 id="authTitle">Log In</h2>
+  <input id="authEmail" type="email" placeholder="Email">
+  <input id="authPassword" type="password" placeholder="Password">
+  <button onclick="submitAuth()">Continue</button>
+  <button onclick="document.getElementById('authBox').style.display='none'">Cancel</button>
+</div>
+
+<script>
+let authMode = 'login';
+
+function showAuth(mode) {
+  authMode = mode;
+  document.getElementById('authTitle').textContent =
+    mode === 'login' ? 'Log In' : 'Sign Up';
+  document.getElementById('authBox').style.display = 'block';
+}
+
+async function submitAuth() {
+  const email = document.getElementById('authEmail').value;
+  const password = document.getElementById('authPassword').value;
+
+  if (!email || !password) {
+    alert('Enter your email and password.');
+    return;
+  }
+
+  if (authMode === 'login') {
+    await logIn(email, password);
+  } else {
+    await signUp(email, password);
+  }
+}
+</script>
+
+ <main>
 
 <section id="home" class="screen active">
 <div class="title">For You</div><div class="muted">Music you might want to back.</div>
