@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SoundVest</title>
+<style>
+:root{--bg:#08080b;--panel:#121217;--panel2:#18181e;--line:#2b2b33;--text:#fff;--muted:#9999a7;--accent:#9b7bff;--green:#4ade80}
+*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}button,input,textarea{font:inherit}
+.app{min-height:100vh;padding-bottom:76px}.top{height:62px;position:sticky;top:0;z-index:30;background:#09090cee;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 14px}.logo{font-size:22px;font-weight:950}.logo span{color:var(--accent)}.wallet{border:1px solid #49376b;background:#17121f;color:#d9ccff;border-radius:999px;padding:8px 12px;font-weight:850}
+main{width:min(850px,100%);margin:auto;padding:16px 12px}.screen{display:none}.screen.active{display:block}.title{font-size:29px;font-weight:950;margin:2px 0}.muted{color:var(--muted)}.sub{font-size:13px;color:var(--muted)}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:15px;margin:12px 0}.songCard{overflow:hidden;padding:0}.cover{height:320px;display:grid;place-items:center;font-size:92px;background:radial-gradient(circle at 20% 15%,#a855f7,#281342 45%,#09090b)}.cover.b{background:radial-gradient(circle at 75% 15%,#38bdf8,#172554 45%,#09090b)}.cover.c{background:radial-gradient(circle at 60% 20%,#fb7185,#3b1222 45%,#09090b)}
+.songInfo{padding:15px}.songTitle{font-size:24px;font-weight:950}.artist{font-weight:800}.actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:12px}.btn{border:1px solid #373740;background:#202026;color:#fff;border-radius:10px;padding:9px 12px;font-weight:800;cursor:pointer}.btn.primary{background:var(--accent);border-color:var(--accent)}.btn.green{background:#14532d;border-color:#166534}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.stat{background:var(--panel2);border:1px solid var(--line);border-radius:13px;padding:12px}.stat b{display:block;font-size:20px;margin-top:3px}.greenText{color:var(--green)}
+.row{display:flex;align-items:center;gap:11px}.grow{flex:1}.thumb{width:54px;height:54px;border-radius:11px;display:grid;place-items:center;background:linear-gradient(135deg,#7c3aed,#ec4899);font-size:24px;flex:none}.thumb.blue{background:linear-gradient(135deg,#0ea5e9,#312e81)}.thumb.green{background:linear-gradient(135deg,#22c55e,#064e3b)}.thumb.orange{background:linear-gradient(135deg,#f97316,#7c2d12)}.divider{height:1px;background:var(--line);margin:13px 0}.right{text-align:right}
+input,textarea,select{width:100%;background:#18181e;border:1px solid #373740;color:#fff;border-radius:10px;padding:11px;margin:6px 0 11px}textarea{min-height:110px;resize:vertical}label{font-size:13px;color:#b8b8c2}
+.search{display:flex;gap:8px}.search input{margin:0}.search button{white-space:nowrap}
+.feedControls{display:flex;gap:7px;overflow:auto;padding:7px 0}.pill{white-space:nowrap;border:1px solid var(--line);background:#121217;color:#bbb;border-radius:999px;padding:8px 12px}.pill.active{background:#fff;color:#09090b}
+.comment{padding:9px 0;border-bottom:1px solid var(--line)}.comment:last-child{border-bottom:0}
+.modal{display:none;position:fixed;inset:0;background:#000b;z-index:80;align-items:flex-end;justify-content:center}.modal.show{display:flex}.sheet{width:min(600px,100%);background:#111116;border:1px solid var(--line);border-radius:22px 22px 0 0;padding:18px;max-height:85vh;overflow:auto}
+.toast{position:fixed;left:50%;bottom:88px;transform:translateX(-50%);background:#fff;color:#000;border-radius:999px;padding:10px 15px;font-weight:850;z-index:100;display:none}
+nav{position:fixed;bottom:0;left:0;right:0;height:72px;background:#0c0c10ee;border-top:1px solid var(--line);z-index:50;display:flex;justify-content:center}nav button{width:16.66%;max-width:130px;border:0;background:none;color:#858590;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font-size:10px;cursor:pointer}nav button span{font-size:21px}nav button.active{color:#fff;background:#19191f;border-radius:12px;margin:6px 0}
+.player{position:fixed;left:50%;bottom:78px;transform:translateX(-50%);width:min(850px,calc(100% - 20px));background:#15151b;border:1px solid #3a3a45;border-radius:15px;padding:10px;z-index:45;display:none}.player.show{display:block}.playerTop{display:flex;align-items:center;gap:10px}.progress{height:5px;background:#33343d;border-radius:99px;margin:9px 0}.progress i{display:block;height:100%;width:38%;background:var(--accent);border-radius:99px}
+.notice{padding:11px;border-radius:11px;background:#17171d;border:1px solid var(--line);margin:8px 0}
+@media(max-width:600px){.cover{height:260px}.grid{grid-template-columns:1fr}.stats{grid-template-columns:1fr 1fr}.stats .stat:last-child{grid-column:span 2}nav button{width:16.66%;font-size:8px}nav button span{font-size:19px}.wallet{font-size:12px}}
+</style>
+</head>
+<body>
+<div class="app">
+<header class="top"><div class="logo">Sound<span>Vest</span></div><div class="wallet">◈ <b id="sv">10,000</b> SV</div></header>
+<main>
+
+<section id="home" class="screen active">
+<div class="title">For You</div><div class="muted">Music you might want to back.</div>
+<div class="feedControls"><button class="pill active">For You</button><button class="pill">Trending</button><button class="pill">Rising</button><button class="pill">New</button></div>
+<div class="card songCard"><div class="cover">♫</div><div class="songInfo"><div class="artist">Luna Vale · Alt Pop</div><div class="songTitle">Neon Hearts</div><div class="muted">A neon-soaked late-night anthem.</div><div class="actions"><button class="btn" onclick="like(this)">♥ <span>2,841</span></button><button class="btn" onclick="comments('Neon Hearts')">💬 24</button><button class="btn" onclick="share('Neon Hearts')">↗ Share</button><button class="btn primary" onclick="invest('Neon Hearts',500)">◈ Invest 500 SV</button><button class="btn" onclick="play('Neon Hearts','Luna Vale')">▶ Play</button></div></div></div>
+<div class="card songCard"><div class="cover b">♫</div><div class="songInfo"><div class="artist">Jax Rivers · Hip-Hop</div><div class="songTitle">Midnight Run</div><div class="muted">Bass-heavy city lights and fast nights.</div><div class="actions"><button class="btn" onclick="like(this)">♥ <span>1,932</span></button><button class="btn" onclick="comments('Midnight Run')">💬 18</button><button class="btn" onclick="share('Midnight Run')">↗ Share</button><button class="btn primary" onclick="invest('Midnight Run',500)">◈ Invest 500 SV</button><button class="btn" onclick="play('Midnight Run','Jax Rivers')">▶ Play</button></div></div></div>
+<div class="card songCard"><div class="cover c">♫</div><div class="songInfo"><div class="artist">Nova Grey · Indie</div><div class="songTitle">After the Rain</div><div class="muted">Soft guitars, warm vocals, fresh momentum.</div><div class="actions"><button class="btn" onclick="like(this)">♥ <span>876</span></button><button class="btn" onclick="comments('After the Rain')">💬 11</button><button class="btn primary" onclick="invest('After the Rain',500)">◈ Invest 500 SV</button><button class="btn" onclick="play('After the Rain','Nova Grey')">▶ Play</button></div></div></div>
+</section>
+
+<section id="discover" class="screen">
+<div class="title">Discover</div><div class="muted">Find songs, artists and rising tracks.</div>
+<div class="search" style="margin-top:13px"><input id="searchInput" placeholder="Search music or artists"><button class="btn primary" onclick="search()">Search</button></div>
+<div class="grid" style="margin-top:12px"><div class="card"><b>🔥 Trending</b><h2>Neon Hearts</h2><div class="muted">2.8K likes</div></div><div class="card"><b>📈 Rising</b><h2>After the Rain</h2><div class="muted">+31% momentum</div></div></div>
+<div class="card"><h2>New releases</h2><div class="row"><div class="thumb orange">♫</div><div class="grow"><b>Golden Hour</b><div class="muted">Milo West</div></div><button class="btn primary" onclick="invest('Golden Hour',500)">Invest</button></div><div class="divider"></div><div class="row"><div class="thumb blue">♫</div><div class="grow"><b>Static Dreams</b><div class="muted">Kira Moon</div></div><button class="btn primary" onclick="invest('Static Dreams',500)">Invest</button></div></div>
+</section>
+
+<section id="upload" class="screen">
+<div class="title">Upload</div><div class="muted">Put your music in front of the community.</div>
+<div class="card"><label>Song title</label><input id="songName" placeholder="Song title"><label>Artist name</label><input placeholder="Artist name"><label>Description</label><textarea placeholder="Tell people about the track"></textarea><label>Audio file</label><input type="file" accept="audio/*" id="audioFile"><label>Cover artwork</label><input type="file" accept="image/*"><button class="btn primary" onclick="publish()">Publish track</button><div id="uploadStatus" class="notice" style="display:none"></div></div>
+<div class="card"><h2>Creator checklist</h2><p>✓ Audio file selected</p><p>✓ Cover artwork</p><p>✓ Song details</p><p>✓ Community-ready description</p></div>
+</section>
+
+<section id="portfolio" class="screen">
+<div class="title">Portfolio</div><div class="muted">Your virtual music-market holdings.</div>
+<div class="stats" style="margin-top:14px"><div class="stat"><span class="muted">Available</span><b id="available">10,000 SV</b></div><div class="stat"><span class="muted">Invested</span><b id="invested">3,500 SV</b></div><div class="stat"><span class="muted">Return</span><b class="greenText">+420 SV</b></div></div>
+<div class="card"><h2>Holdings</h2><div class="song"><div class="thumb">♫</div><div class="grow"><b>Neon Hearts</b><div class="muted">Luna Vale</div></div><div class="right"><b>2,000 SV</b><div class="greenText">+18.2%</div></div></div><div class="song"><div class="thumb blue">♫</div><div class="grow"><b>Midnight Run</b><div class="muted">Jax Rivers</div></div><div class="right"><b>1,000 SV</b><div class="greenText">+9.4%</div></div></div><div class="song"><div class="thumb green">♫</div><div class="grow"><b>After the Rain</b><div class="muted">Nova Grey</div></div><div class="right"><b>500 SV</b><div class="greenText">+4.1%</div></div></div></div>
+<div class="card"><h2>Recent activity</h2><div class="notice">Today · Bought 500 SV of Neon Hearts</div><div class="notice">Yesterday · Liked Midnight Run</div><div class="notice">Sep 21 · Bought 2,000 SV of Neon Hearts</div></div>
+</section>
+
+<section id="alerts" class="screen">
+<div class="title">Notifications</div><div class="muted">What’s happening around your music.</div>
+<div class="card"><div class="notice">🔥 Neon Hearts is trending.</div><div class="notice">💰 Your Neon Hearts position increased 18.2% in the demo market.</div><div class="notice">❤️ Jax Rivers liked your activity.</div><div class="notice">🎵 Nova Grey released After the Rain.</div></div>
+</section>
+
+<section id="profile" class="screen">
+<div class="title">Profile</div><div class="muted">Your SoundVest identity.</div>
+<div class="card"><div class="row"><div style="font-size:55px">👤</div><div><h2 style="margin:0">Beckett</h2><div class="muted">@beckett · Music fan</div></div></div><div class="actions"><button class="btn primary" onclick="toast('Profile editor opened')">Edit profile</button><button class="btn" onclick="toast('Share profile')">Share</button></div></div>
+<div class="stats"><div class="stat"><span class="muted">Following</span><b>128</b></div><div class="stat"><span class="muted">Likes</span><b>842</b></div><div class="stat"><span class="muted">Holdings</span><b>3</b></div></div>
+<div class="card"><h2>My activity</h2><div class="notice">♥ Liked Neon Hearts</div><div class="notice">◈ Invested in Midnight Run</div></div>
+</section>
+
+</main>
+
+<div id="player" class="player"><div class="playerTop"><div class="thumb">♫</div><div class="grow"><b id="playerTitle">Nothing playing</b><div class="sub" id="playerArtist"></div></div><button class="btn" onclick="togglePlayer()">×</button></div><div class="progress"><i></i></div><div class="actions"><button class="btn" onclick="toast('Previous')">⏮</button><button class="btn primary" onclick="toast('Playing demo audio')">▶</button><button class="btn" onclick="toast('Next')">⏭</button></div></div>
+
+<div id="modal" class="modal" onclick="if(event.target===this)closeModal()"><div class="sheet" id="sheet"></div></div>
+<div id="toast" class="toast"></div>
+
+<nav>
+<button data-screen="home" class="active" onclick="go('home',this)"><span>⌂</span>Home</button>
+<button data-screen="discover" onclick="go('discover',this)"><span>⌕</span>Discover</button>
+<button data-screen="upload" onclick="go('upload',this)"><span>＋</span>Upload</button>
+<button data-screen="portfolio" onclick="go('portfolio',this)"><span>▣</span>Portfolio</button>
+<button data-screen="alerts" onclick="go('alerts',this)"><span>♧</span>Alerts</button>
+<button data-screen="profile" onclick="go('profile',this)"><span>●</span>Profile</button>
+</nav>
+</div>
+
+<script>
+let sv=10000, invested=3500;
+function go(id,btn){
+ document.querySelectorAll('.screen').forEach(x=>x.classList.remove('active'));
+ const target=document.getElementById(id); if(target)target.classList.add('active');
+ document.querySelectorAll('nav button').forEach(x=>x.classList.remove('active'));
+ if(btn)btn.classList.add('active');
+ window.scrollTo({top:0,behavior:'smooth'});
+}
+function toast(t){const x=document.getElementById('toast');x.textContent=t;x.style.display='block';clearTimeout(window.tt);window.tt=setTimeout(()=>x.style.display='none',1700)}
+function like(b){let s=b.querySelector('span');s.textContent=(+s.textContent.replace(',','')+1).toLocaleString();b.classList.add('green');toast('Liked')}
+function share(n){toast('Share link copied for '+n)}
+function play(n,a){document.getElementById('playerTitle').textContent=n;document.getElementById('playerArtist').textContent=a;document.getElementById('player').classList.add('show');toast('Now playing '+n)}
+function togglePlayer(){document.getElementById('player').classList.remove('show')}
+function comments(song){
+ document.getElementById('sheet').innerHTML='<h2>'+song+' · Comments</h2><div class="comment"><b>@maria</b><div class="muted">This is going on my playlist.</div></div><div class="comment"><b>@jordan</b><div class="muted">The hook is crazy.</div></div><textarea id="newComment" placeholder="Write a comment…"></textarea><button class="btn primary" onclick="postComment()">Post comment</button><button class="btn" onclick="closeModal()">Close</button>';
+ document.getElementById('modal').classList.add('show')
+}
+function postComment(){toast('Comment posted');closeModal()}
+function closeModal(){document.getElementById('modal').classList.remove('show')}
+function invest(song,amount){
+ if(sv<amount){toast('Not enough SV');return}
+ sv-=amount;invested+=amount;document.getElementById('sv').textContent=sv.toLocaleString();document.getElementById('available').textContent=sv.toLocaleString()+' SV';document.getElementById('invested').textContent=invested.toLocaleString()+' SV';toast('Invested '+amount+' SV in '+song)
+}
+function publish(){
+ const n=document.getElementById('songName').value||'Untitled track';
+ const f=document.getElementById('audioFile').files[0];
+ const s=document.getElementById('uploadStatus');s.style.display='block';s.textContent='Demo published: '+n+(f?' · '+f.name:'');toast('Track published')
+}
+function search(){const q=document.getElementById('searchInput').value.trim();toast(q?'Searching for '+q:'Type something to search')}
+</script>
+</body></html>
