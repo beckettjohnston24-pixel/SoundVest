@@ -269,7 +269,7 @@ investButton.onclick = async () => {
     } else {
     document.getElementById('sv').textContent =
         Number(data).toLocaleString();
-
+await loadSVBalance();
     alert(
         'Investment successful! Remaining balance: '
         + data + ' SV'
