@@ -137,7 +137,7 @@ async function submitAuth() {
 <script>
 let sv=10000, invested=3500;
 function go(id,btn){
- document.querySelectorAll('.screen').forEach(x=>x.classList.remove('active'));
+ alert("Navigation clicked: " + id);document.querySelectorAll('.screen').forEach(x=>x.classList.remove('active'));
  const target=document.getElementById(id); if(target)target.classList.add('active');
  document.querySelectorAll('nav button').forEach(x=>x.classList.remove('active'));
  if(btn)btn.classList.add('active');
