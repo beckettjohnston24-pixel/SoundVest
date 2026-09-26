@@ -81,7 +81,7 @@ async function submitAuth() {
 <section id="home" class="screen active">
 <div class="title">For You</div><div class="muted">Music you might want to back.</div>
 <div class="feedControls"><button class="pill active">For You</button><button class="pill">Trending</button><button class="pill">Rising</button><button class="pill">New</button></div>
-<div class="card songCard"><div class="cover">♫</div><div class="songInfo"><div class="artist">Luna Vale · Alt Pop</div><div class="songTitle">Neon Hearts</div><div class="muted">A neon-soaked late-night anthem.</div><div class="actions"><button class="btn" onclick="like(this)">♥ <span>2,841</span></button><button class="btn" onclick="comments('Neon Hearts')">💬 24</button><button class="btn" onclick="share('Neon Hearts')">↗ Share</button><button class="btn primary" onclick="invest('Neon Hearts',500)">◈ Invest 500 SV</button><button class="btn" onclick="play('Neon Hearts','Luna Vale')">▶ Play</button></div></div></div>
+<div class="card songCard"><div class="cover">♫</div><div class="songInfo"><div class="artist">Luna Vale · Alt Pop</div><div class="songTitle">Neon Hearts</div><div class="muted">A neon-soaked late-night anthem.</div><div class="actions"><button class="btn" onclick="like(this)">♥ <span>2,841</span></button><button class="btn" onclick="comments('Neon Hearts')">💬 24</button><button class="btn" onclick="share('Neon Hearts')">↗ Share</button><button class="btn primary" onclick="invest('Neon Hearts',500)">ml◈ Invest 500 SV</button><button class="btn" onclick="play('Neon Hearts','Luna Vale')">▶ Play</button></div></div></div>
 <div class="card songCard"><div class="cover b">♫</div><div class="songInfo"><div class="artist">Jax Rivers · Hip-Hop</div><div class="songTitle">Midnight Run</div><div class="muted">Bass-heavy city lights and fast nights.</div><div class="actions"><button class="btn" onclick="like(this)">♥ <span>1,932</span></button><button class="btn" onclick="comments('Midnight Run')">💬 18</button><button class="btn" onclick="share('Midnight Run')">↗ Share</button><button class="btn primary" onclick="invest('Midnight Run',500)">◈ Invest 500 SV</button><button class="btn" onclick="play('Midnight Run','Jax Rivers')">▶ Play</button></div></div></div>
 <div class="card songCard"><div class="cover c">♫</div><div class="songInfo"><div class="artist">Nova Grey · Indie</div><div class="songTitle">After the Rain</div><div class="muted">Soft guitars, warm vocals, fresh momentum.</div><div class="actions"><button class="btn" onclick="like(this)">♥ <span>876</span></button><button class="btn" onclick="comments('After the Rain')">💬 11</button><button class="btn primary" onclick="invest('After the Rain',500)">◈ Invest 500 SV</button><button class="btn" onclick="play('After the Rain','Nova Grey')">▶ Play</button></div></div></div>
 </section>
@@ -222,7 +222,7 @@ async function loadDiscoverSongs() {
 
   const { data, error } = await supabaseClient
     .from('songs')
-    .select('title, artist, file_path')
+    .select('id, title, artist, file_path')
     .order('created_at', { ascending: false });
 
   if (error) {
@@ -249,7 +249,39 @@ async function loadDiscoverSongs() {
       .from('Songs')
       .getPublicUrl(song.file_path).data.publicUrl;
 
-    card.append(title, artist, audio);
+    const investButton = document.createElement('button');
+
+investButton.className = 'btn primary';
+investButton.textContent = 'Invest 500 SV';
+
+investButton.onclick = async () => {
+    investButton.disabled = true;
+
+    try {
+        const { data, error } = await supabaseClient.rpc(
+            'invest_in_song',
+            {
+                p_song_id: song.id,
+                p_amount: 500
+            }
+        );
+
+        if (error) {
+            alert(error.message);
+        } else {
+            alert(
+                'Investment successful! Remaining balance: '
+                + data + ' SV'
+            );
+        }
+    } catch (error) {
+        alert(error.message);
+    } finally {
+        investButton.disabled = false;
+    }
+};
+
+card.append(title, artist, audio, investButton);
     container.appendChild(card);
   }
 }
