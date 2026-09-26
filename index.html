@@ -266,7 +266,9 @@ investButton.onclick = async () => {
             }
         );
 
-    } else {
+    if (error) {
+    throw error;
+} else {
     document.getElementById('sv').textContent =
         Number(data).toLocaleString();
 await loadSVBalance();
