@@ -1,0 +1,238 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#0b0a11"><title>SoundVest • Like Market Test</title>
+<style>
+:root{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#f8f6ff;background:#0b0a11;--panel:#17151f;--edge:#322c40;--muted:#aaa3b8;--purple:#a68bff}*{box-sizing:border-box}body{margin:0}button,input,textarea{font:inherit}button{cursor:pointer}button:disabled{opacity:.55;cursor:wait}.top{position:sticky;top:0;z-index:5;background:#0b0a11ee;border-bottom:1px solid var(--edge);padding:15px;display:flex;align-items:center;justify-content:space-between}.brand{font-size:24px;font-weight:950;letter-spacing:-1px}.brand span{color:var(--purple)}.wallet{font-weight:800;color:#d6c9ff;background:#242031;padding:9px 12px;border-radius:25px;font-size:13px}main{max-width:750px;margin:auto;padding:18px 14px 110px}.screen{display:none}.screen.active{display:block}h1{font-size:30px;margin:4px 0}h2{font-size:19px}.muted,.hint{color:var(--muted)}.hint{font-size:13px}.card{border:1px solid var(--edge);background:var(--panel);padding:16px;border-radius:18px;margin:15px 0}.hero{height:170px;border-radius:14px;display:grid;place-items:center;font-size:68px;background:radial-gradient(circle at 30% 25%,#7042c5,#251739 55%,#13111b)}.btn{border:1px solid #50445f;background:#282332;color:white;padding:11px 13px;border-radius:11px;font-weight:750}.primary{background:#9374ed;border-color:#9374ed;color:#100a20}.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:13px}.actions>*{flex:1}label{display:block;color:#c9c1d4;font-size:13px;margin-top:12px}input,textarea{width:100%;background:#211d29;border:1px solid #4c425a;color:#fff;padding:12px;border-radius:10px;margin-top:6px}textarea{min-height:100px}.statrow{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.stat{border:1px solid var(--edge);background:#221e2a;border-radius:12px;padding:13px;min-width:0}.stat strong{display:block;font-size:21px;overflow-wrap:anywhere}.song{display:flex;align-items:center;gap:12px;border-top:1px solid var(--edge);padding:14px 0}.song:first-child{border-top:0}.songinfo{min-width:0;flex:1}.songinfo strong{display:block;overflow-wrap:anywhere}.song audio{width:100%;max-width:100%;margin-top:10px}.thumb{width:55px;height:55px;flex:none;background:linear-gradient(140deg,#8449d9,#32235c);border-radius:10px;display:grid;place-items:center;font-size:25px}.status{padding:11px;border-radius:10px;background:#25202f;margin-top:10px;overflow-wrap:anywhere}.error{color:#ffb1b1}.success{color:#a1f2c0}.empty{padding:25px 12px;text-align:center;color:var(--muted)}nav{position:fixed;bottom:0;left:0;right:0;z-index:8;display:flex;justify-content:center;background:#100e17;border-top:1px solid var(--edge);padding-bottom:env(safe-area-inset-bottom)}nav button{width:16.666%;max-width:110px;min-width:0;background:transparent;color:#aba3b8;border:0;padding:12px 0 10px;font-size:10px;display:flex;flex-direction:column;gap:4px;align-items:center}nav button span{font-size:23px}nav button.active{color:white;background:#272134}.authbuttons{display:flex;gap:8px;margin-top:10px}.authbuttons button{flex:1}.hidden{display:none!important}a{color:#c9b8ff}#notice{position:fixed;z-index:20;bottom:90px;left:15px;right:15px;max-width:500px;margin:auto;background:#f3edff;color:#171022;border-radius:13px;padding:13px;box-shadow:0 8px 30px #0009;display:none}
+
+/* Portfolio styling: the green projections below are examples, not earned rewards. */
+.growth{color:#4ade80;font-weight:850}.demoTag{display:inline-block;font-size:10px;vertical-align:middle;color:#9decb6;background:#193323;border:1px solid #306343;padding:3px 6px;border-radius:999px;margin-left:5px;letter-spacing:.04em}.growthValue{display:flex;align-items:center;gap:6px;justify-content:flex-end;margin-top:4px}.holdingRight{text-align:right;flex:none}.holdingRight strong{font-size:17px}.holdingTitle{min-width:0}.growthPreview{background:#102219;border:1px solid #285039;border-radius:12px;padding:13px;margin-top:13px}.growthPreview p{margin:5px 0 0}.sparkline{width:100%;max-width:170px;height:39px;display:block;margin:8px 0 0 auto}.demoNote{font-size:12px;color:#c0d8c6;line-height:1.45}.summaryStat{grid-column:1/-1}.holdingCount{font-size:12px;color:var(--muted);margin-top:3px}
+
+/* Profile / followers */
+.profileHead{display:flex;align-items:center;gap:15px}.avatar{width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,#8953dc,#313052);display:grid;place-items:center;font-size:34px;flex:none}.profileHead h2{margin:0 0 5px}.socialStats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:14px 0}.socialStats .stat{text-align:center}.socialStats strong{font-size:22px}.directorySearch{margin-bottom:12px}.creator{display:flex;gap:10px;align-items:center;padding:12px 0;border-top:1px solid var(--edge)}.creator:first-child{border-top:0}.creator .name{flex:1;min-width:0;overflow-wrap:anywhere}.creator button{flex:none}.profileBio{white-space:pre-wrap;overflow-wrap:anywhere}.profileSection{margin-top:24px}.subtle{font-size:12px;color:#aaa3b8}
+/* Real virtual market (not cash or trading securities) */
+.marketLabel{font-size:12px;color:#b9a8d4;margin:6px 0}.marketDeltaUp{color:#4ade80;font-weight:850}.marketDeltaDown{color:#fb7185;font-weight:850}.marketFlat{color:#c4bacc;font-weight:850}.marketRow{display:flex;align-items:center;gap:10px;justify-content:space-between;flex-wrap:wrap}.marketDetails{font-size:12px;color:#b5aec3;margin-top:4px}.position{padding:15px 0;border-top:1px solid var(--edge)}.position:first-child{border-top:0}.position button{margin-top:10px}.marketInfo{line-height:1.55;background:#251c31;border:1px solid #473654;padding:12px;border-radius:12px;margin:12px 0}
+/* Custom investment dialog */
+.investOverlay{position:fixed;inset:0;background:#000c;z-index:35;display:none;align-items:center;justify-content:center;padding:18px}.investOverlay.show{display:flex}.investSheet{width:min(440px,100%);background:#1b1725;border:1px solid #594776;border-radius:20px;padding:20px;box-shadow:0 20px 65px #000b}.investSheet h2{margin-top:0}.investChoice{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:14px 0}.investChoice button{padding:10px 2px}.investSheet input{font-size:24px;font-weight:800}.positive{color:#4ade80}.returnLabel{font-size:12px;color:#a2dfb0;margin-top:4px}.song .btn{margin-top:10px}.rewardNote{font-size:12px;color:#b8d6c2;line-height:1.5}
+</style><script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script></head><body>
+<header class="top"><div class="brand">Sound<span>Vest</span></div><div class="wallet">◈ <span id="topBalance">—</span> SV</div></header>
+<main>
+<section class="screen active" id="home"><h1>For You</h1><p class="muted">Discover something worth listening to.</p><div class="card"><div class="hero">♫</div><h2>Welcome to SoundVest</h2><p class="muted">Upload your music, discover independent artists and support tracks using virtual SV points.</p><div class="actions"><button class="btn primary" data-go="discover">Explore music</button><button class="btn" data-go="upload">Upload a track</button></div></div><h2>New music</h2><div id="homeSongs" class="card"><div class="empty">Loading songs…</div></div></section>
+<section class="screen" id="discover"><h1>Discover</h1><p class="muted">Real tracks uploaded by the community.</p><input id="search" type="search" placeholder="Search tracks or artists"><div id="discoverSongs" class="card"><div class="empty">Loading songs…</div></div></section>
+<section class="screen" id="upload"><h1>Upload</h1><p class="muted">Share your own music.</p><form id="uploadForm" class="card"><label for="songTitle">Track title</label><input id="songTitle" maxlength="120" required><label for="artist">Artist name</label><input id="artist" maxlength="120" required><label for="audio">Audio file</label><input id="audio" type="file" accept="audio/*" required><p class="hint">Only upload music you have the right to share. File limits depend on your Supabase storage settings.</p><button class="btn primary" id="uploadButton" type="submit">Publish track</button><div id="uploadStatus" class="status" role="status">Sign in before publishing.</div></form></section>
+<section class="screen" id="portfolio"><h1>Portfolio</h1><p class="muted">Real virtual gains and losses based on the pace of new likes.</p>
+<div class="statrow"><div class="stat"><span class="muted">Available</span><strong id="available">—</strong></div><div class="stat"><span class="muted">Invested (open)</span><strong id="invested">—</strong></div><div class="stat"><span class="muted">Current holdings value</span><strong id="holdingValue">—</strong></div><div class="stat"><span class="muted">Unrealized growth</span><strong id="marketReturn">—</strong></div><div class="stat"><span class="muted">Profit/loss from sales</span><strong id="realizedReturn">—</strong></div></div>
+<div class="card"><h2>Your holdings</h2><div id="holdings" class="empty">Log in to view your holdings.</div></div>
+<div class="marketInfo"><b>How the like market works</b><br>New likes move songs upward. Likes become less influential after 24 hours and 7 days, allowing values to fall when momentum slows. Each position is valued against the score when you invested. You receive the displayed virtual SV payout only when you sell. Minimum value 25%, maximum 400% of the original amount. Your prior investments start at the market score when this update is installed.</div>
+<p class="hint">Experimental virtual-only market, no real-world value. Fake accounts and coordinated liking can still manipulate this system; do not open it to the public until abuse protections and legacy database permissions are audited.</p></section>
+<section class="screen" id="alerts"><h1>Alerts</h1><div class="card"><h2>Notifications</h2><p class="muted">Your activity alerts will appear here when the notification system is connected.</p></div></section>
+<section class="screen" id="profile"><h1>Profile</h1>
+<div class="card"><div class="profileHead"><div class="avatar" aria-hidden="true">♫</div><div><h2 id="profileTitle">Guest</h2><p id="profileEmail" class="muted">Sign in to get started.</p></div></div>
+<div id="socialMember" class="hidden"><p id="visibleBio" class="profileBio muted">Add a bio to tell people about yourself.</p><div class="socialStats"><div class="stat"><strong id="profileFollowers">—</strong><span class="muted">Followers</span></div><div class="stat"><strong id="profileFollowing">—</strong><span class="muted">Following</span></div><div class="stat"><strong id="profileUploads">—</strong><span class="muted">Uploads</span></div></div><p class="subtle">Follower counts use real accounts, once the follows database is set up.</p></div>
+<div id="guestAuth"><label for="email">Email</label><input id="email" type="email" autocomplete="email"><label for="password">Password</label><input id="password" type="password" autocomplete="current-password" minlength="6"><div class="authbuttons"><button class="btn primary" id="login" type="button">Log in</button><button class="btn" id="signup" type="button">Sign up</button></div></div>
+<div id="memberActions" class="hidden"><label for="displayName">Display name</label><input id="displayName" maxlength="60"><label for="profileBio">Bio</label><textarea id="profileBio" maxlength="280" placeholder="What kind of music do you make or love?"></textarea><div class="actions"><button class="btn primary" id="saveProfile">Save profile</button><button class="btn" id="logout">Log out</button></div></div><div id="authStatus" class="status" role="status"></div></div>
+<div id="socialExplore" class="hidden"><div class="card"><h2>Find artists to follow</h2><p class="hint">Discover creators who have uploaded songs on SoundVest.</p><input id="creatorSearch" class="directorySearch" type="search" placeholder="Search artist names"><div id="creatorList" class="muted">Loading artists…</div></div><div class="card"><h2>Your followers</h2><div id="followersList" class="muted">Loading…</div></div><div class="card"><h2>Your music</h2><div id="mySongs" class="muted">Loading…</div></div><div class="card"><h2>Your recent investments</h2><div id="profileInvestments" class="muted">Loading…</div></div></div>
+</section>
+</main><div id="investOverlay" class="investOverlay" role="dialog" aria-modal="true" aria-labelledby="investHeading"><div class="investSheet"><h2 id="investHeading">Support a track</h2><p id="investSongName" class="muted"></p><label for="investAmount">How much SV do you want to invest?</label><input id="investAmount" type="number" inputmode="numeric" min="1" max="10000" step="1" value="500"><div class="investChoice"><button type="button" class="btn" data-amount="100">100</button><button type="button" class="btn" data-amount="250">250</button><button type="button" class="btn" data-amount="500">500</button><button type="button" class="btn" data-amount="1000">1,000</button></div><p class="hint" id="investBalanceHint">Checking your balance…</p><div id="investError" class="error" role="alert"></div><div class="actions"><button id="investCancel" class="btn" type="button">Cancel</button><button id="investConfirm" class="btn primary" type="button">Confirm investment</button></div><p class="hint">SV is virtual. The market price may rise or fall; you can sell later for virtual SV. No cash value.</p></div></div><nav aria-label="Main navigation"><button class="active" data-go="home"><span>⌂</span>Home</button><button data-go="discover"><span>⌕</span>Discover</button><button data-go="upload"><span>＋</span>Upload</button><button data-go="portfolio"><span>▣</span>Portfolio</button><button data-go="alerts"><span>♧</span>Alerts</button><button data-go="profile"><span>●</span>Profile</button></nav><div id="notice" role="status"></div>
+<script>
+(()=>{'use strict';
+const URL='https://oyfhondpblaiirmdvabr.supabase.co', KEY='sb_publishable_6GGfOuzvp-nVrMeIt5U-PA_UwygL0_I';
+const $=id=>document.getElementById(id);let db=null,user=null,songs=[],active='home',toastTimer;
+const marketCache=new Map();
+async function loadMarketStats(){if(!db)return;const {data,error}=await db.rpc('soundvest_market_stats');if(error){console.warn('Market database setup needed',error);return}marketCache.clear();for(const row of data||[])marketCache.set(row.song_id,row)}
+function formatChange(n){return(n>0?'↗ +':n<0?'↘ ':'→ ')+n.toLocaleString()+' SV'}
+function changeClass(n){return n>0?'marketDeltaUp':n<0?'marketDeltaDown':'marketFlat'}
+
+function msg(text){const el=$('notice');el.textContent=text;el.style.display='block';clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.style.display='none',3500)}
+function status(id,text,bad=false){const el=$(id);el.textContent=text;el.classList.toggle('error',bad)}
+function go(id){if(!$(id)||!$(id).classList.contains('screen'))return;active=id;document.querySelectorAll('.screen').forEach(el=>el.classList.toggle('active',el.id===id));document.querySelectorAll('nav [data-go]').forEach(el=>el.classList.toggle('active',el.dataset.go===id));window.scrollTo(0,0);if(id==='portfolio')loadPortfolio();if(id==='discover'||id==='home'){loadMarketStats().then(()=>loadSongs());}if(id==='profile')loadSocialProfile();}
+document.addEventListener('click',e=>{const button=e.target.closest('[data-go]');if(button)go(button.dataset.go)});
+function requireDB(){if(!db){msg('Could not connect to Supabase. Check your connection and reload.');return false}return true}
+function setUser(next){user=next||null;$('guestAuth').classList.toggle('hidden',!!user);$('memberActions').classList.toggle('hidden',!user);$('profileTitle').textContent=user?.user_metadata?.display_name||user?.email?.split('@')[0]||'Guest';$('profileEmail').textContent=user?.email||'Log in or create an account to get started.';$('displayName').value=user?.user_metadata?.display_name||'';$('profileBio').value=user?.user_metadata?.bio||'';$('visibleBio').textContent=user?.user_metadata?.bio||'Add a bio to tell people about yourself.';$('socialMember').classList.toggle('hidden',!user);$('socialExplore').classList.toggle('hidden',!user);if(!user){$('topBalance').textContent='—';$('available').textContent='—';$('invested').textContent='—';$('holdingValue').textContent='—';$('marketReturn').textContent='—';$('realizedReturn').textContent='—';$('holdings').textContent='Sign in to see your investments.';$('profileFollowers').textContent='—';$('profileFollowing').textContent='—';$('profileUploads').textContent='—';}else{loadBalance();if(active==='profile')setTimeout(loadSocialProfile,0);}}
+async function loadBalance(){if(!db||!user)return;const current=user.id;try{const {data,error}=await db.from('profiles').select('sv_balance').eq('id',current).single();if(error)throw error;if(user?.id!==current)return;const n=Number(data.sv_balance);if(!Number.isFinite(n))throw Error('Invalid balance');$('topBalance').textContent=n.toLocaleString();$('available').textContent=n.toLocaleString()+' SV';}catch(e){$('topBalance').textContent='—';$('available').textContent='Unavailable';console.error(e)}}
+function songCard(song,investable){
+  const wrap=document.createElement('div');wrap.className='song';
+  const info=document.createElement('div');info.className='songinfo';
+  const title=document.createElement('strong');title.textContent=song.title||'Untitled';
+  const artist=document.createElement('div');artist.className='muted';artist.textContent=song.artist||'Unknown artist';
+  info.append(title,artist);
+  const market=document.createElement('div');market.className='marketLabel';
+  const m=marketCache.get(song.id);market.textContent=m?'♥ '+Number(m.likes).toLocaleString()+' likes · momentum score '+Number(m.score).toFixed(1):'Checking likes…';info.append(market);
+  const likeBtn=document.createElement('button');likeBtn.className='btn';likeBtn.textContent='♥ Like';
+  likeBtn.addEventListener('click',async()=>{
+    if(!user){msg('Log in on Profile to like tracks.');go('profile');return}
+    if(song.user_id===user.id){msg('You cannot like your own song.');return}
+    likeBtn.disabled=true;
+    try{const {data,error}=await db.rpc('soundvest_like_song',{p_song_id:song.id});if(error)throw error;
+      msg(data.new_like?'Your like was counted!':'You already liked this song.');await loadMarketStats();renderSongs();
+    }catch(e){msg('Like failed: '+e.message)}finally{likeBtn.disabled=false}
+  });info.append(likeBtn);
+  const audio=document.createElement('audio');audio.controls=true;audio.preload='none';
+  audio.src=db.storage.from('Songs').getPublicUrl(song.file_path).data.publicUrl;info.append(audio);
+  if(investable){const btn=document.createElement('button');btn.className='btn primary';btn.textContent='◈ Invest your amount';btn.addEventListener('click',()=>openInvest(song));info.append(btn)}
+  const thumb=document.createElement('div');thumb.className='thumb';thumb.textContent='♫';wrap.append(thumb,info);return wrap;
+}
+function renderSongs(){const query=$('search').value.trim().toLowerCase();const discover=$('discoverSongs'),home=$('homeSongs');discover.replaceChildren();home.replaceChildren();const filtered=songs.filter(s=>(s.title+' '+s.artist).toLowerCase().includes(query));if(!filtered.length)discover.innerHTML='<div class="empty">No matching tracks yet.</div>';for(const song of filtered)discover.append(songCard(song,true));if(!songs.length)home.innerHTML='<div class="empty">No tracks uploaded yet. Be the first!</div>';for(const song of songs.slice(0,5))home.append(songCard(song,true));}
+let loadingSongs=null;async function loadSongs(force=false){if(!db){$('discoverSongs').textContent='Supabase connection unavailable.';return}if(loadingSongs)return loadingSongs;if(songs.length&&!force){renderSongs();return}loadingSongs=(async()=>{try{const {data,error}=await db.from('songs').select('id,title,artist,file_path,user_id').order('created_at',{ascending:false}).limit(100);if(error)throw error;songs=data||[];await loadMarketStats();renderSongs()}catch(e){console.error(e);$('discoverSongs').textContent='Unable to load songs: '+e.message;$('homeSongs').textContent='Unable to load songs.'}finally{loadingSongs=null}})();return loadingSongs}
+let selectedSong=null,submittingInvestment=false;
+function closeInvest(){if(submittingInvestment)return;selectedSong=null;$('investOverlay').classList.remove('show');}
+async function openInvest(song){
+  if(!user){msg('Log in on the Profile page before investing.');go('profile');return}
+  selectedSong=song;$('investSongName').textContent=song.title+' · '+(song.artist||'Artist');
+  $('investAmount').value='500';$('investError').textContent='';
+  $('investOverlay').classList.add('show');
+  $('investBalanceHint').textContent='Check the balance at the top before confirming.';
+  await loadBalance();
+  if(selectedSong===song)$('investBalanceHint').textContent='Available: '+$('available').textContent;
+}
+$('investCancel').addEventListener('click',closeInvest);
+$('investOverlay').addEventListener('click',e=>{if(e.target===$('investOverlay'))closeInvest()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeInvest()});
+document.querySelectorAll('[data-amount]').forEach(button=>button.addEventListener('click',()=>{$('investAmount').value=button.dataset.amount;$('investError').textContent=''}));
+$('investConfirm').addEventListener('click',async()=>{
+  if(!selectedSong||submittingInvestment||!requireDB())return;
+  const value=$('investAmount').value.trim();const amount=Number(value);
+  if(!/^\d+$/.test(value)||!Number.isSafeInteger(amount)||amount<1||amount>10000){$('investError').textContent='Enter a whole number from 1 to 10,000 SV.';return}
+  submittingInvestment=true;const button=$('investConfirm'),song=selectedSong;
+  button.disabled=true;$('investCancel').disabled=true;$('investError').textContent='';button.textContent='Investing…';
+  try{
+    const {data,error}=await db.rpc('soundvest_market_buy',{p_song_id:song.id,p_amount:amount});
+    if(error)throw error;
+    msg('Invested '+amount.toLocaleString()+' SV in '+song.title+' at its current like score.');
+    await loadBalance();selectedSong=null;$('investOverlay').classList.remove('show');
+    if(active==='portfolio')await loadPortfolio();
+    if(active==='profile')await loadSocialProfile();
+  }catch(e){console.error(e);$('investError').textContent=e.message?.includes('soundvest_market_buy')?'First run the included LIKE MARKET database SQL in Supabase.':('Investment failed: '+(e.message||String(e)));}
+  finally{submittingInvestment=false;button.disabled=false;$('investCancel').disabled=false;button.textContent='Confirm investment'}
+});
+let portfolioLoading=false;
+async function loadPortfolio(){
+  if(!db){$('holdings').textContent='Connection unavailable.';return}
+  if(!user){$('holdings').textContent='Log in to see your investments.';return}
+  if(portfolioLoading)return;
+  portfolioLoading=true;const uid=user.id;
+  await loadBalance();$('holdings').textContent='Loading market positions…';
+  try{
+    const {data,error}=await db.rpc('soundvest_market_portfolio');
+    if(error)throw error;if(user?.id!==uid)return;
+    const entries=data?.open||[],invested=entries.reduce((n,p)=>n+Number(p.amount),0),
+      value=entries.reduce((n,p)=>n+Number(p.value),0),gain=value-invested;
+    $('invested').textContent=invested.toLocaleString()+' SV';
+    $('holdingValue').textContent=value.toLocaleString()+' SV';
+    $('marketReturn').textContent=formatChange(gain);$('marketReturn').className=changeClass(gain);
+    const realized=Number(data?.realized_profit||0);
+    $('realizedReturn').textContent=formatChange(realized);$('realizedReturn').className=changeClass(realized);
+    const container=$('holdings');container.replaceChildren();container.classList.remove('empty');
+    if(!entries.length){container.textContent='No open positions yet. Go to Discover to invest in music!';return}
+    for(const p of entries){
+      const delta=Number(p.value)-Number(p.amount),percent=(delta/Number(p.amount))*100;
+      const row=document.createElement('div');row.className='position';
+      const header=document.createElement('div');header.className='marketRow';
+      const name=document.createElement('strong');name.textContent=p.title+' · '+p.artist;
+      const change=document.createElement('strong');change.className=changeClass(delta);
+      change.textContent=(delta>0?'↗ +':delta<0?'↘ ':'→ ')+percent.toFixed(1)+'%';
+      header.append(name,change);row.append(header);
+      const detail=document.createElement('div');detail.className='marketDetails';
+      detail.textContent='Invested: '+Number(p.amount).toLocaleString()+' SV · Sell value: '+Number(p.value).toLocaleString()+' SV · '+Number(p.likes).toLocaleString()+' likes';row.append(detail);
+      const payout=document.createElement('div');payout.className=changeClass(delta);
+      payout.textContent=formatChange(delta)+' unrealized';row.append(payout);
+      const sell=document.createElement('button');sell.className='btn';sell.textContent='Sell for '+Number(p.value).toLocaleString()+' SV';
+      sell.addEventListener('click',async()=>{
+        if(!confirm('Sell this position now? The price may have changed since loading. Your payout will use the price at sale time.'))return;
+        sell.disabled=true;
+        try{const response=await db.rpc('soundvest_market_sell',{p_position_id:p.id});if(response.error)throw response.error;
+          msg('Sold for '+Number(response.data.payout).toLocaleString()+' SV. '+formatChange(Number(response.data.profit)));
+          await loadBalance();setTimeout(loadPortfolio,0);
+        }catch(e){msg('Sell failed: '+e.message);console.error(e)}finally{sell.disabled=false}
+      });row.append(sell);container.append(row);
+    }
+  }catch(e){console.error(e);$('holdings').textContent='Market setup or loading failed: '+e.message;}
+  finally{portfolioLoading=false}
+}
+// Social relationships are saved in the Supabase follows table, not browser storage.
+let socialLoading=false;
+const socialNames=new Map();
+function creatorRow(creator,followingSet,uid){
+  const row=document.createElement('div');row.className='creator';
+  const avatar=document.createElement('div');avatar.className='thumb';avatar.textContent='♫';
+  const name=document.createElement('div');name.className='name';const label=document.createElement('strong');
+  label.textContent=creator.name||'SoundVest artist';name.append(label);
+  const btn=document.createElement('button');btn.className='btn';
+  function update(){btn.textContent=followingSet.has(creator.id)?'Following ✓':'+ Follow';btn.classList.toggle('primary',!followingSet.has(creator.id));}
+  update();btn.addEventListener('click',async()=>{
+    if(!user||user.id!==uid){msg('Log in to follow artists.');return;}
+    btn.disabled=true;
+    try{
+      if(followingSet.has(creator.id)){
+        const {error}=await db.from('follows').delete().eq('follower_id',uid).eq('following_id',creator.id);
+        if(error)throw error;followingSet.delete(creator.id);msg('Unfollowed '+creator.name);
+      }else{
+        const {error}=await db.from('follows').insert({follower_id:uid,following_id:creator.id});
+        if(error)throw error;followingSet.add(creator.id);msg('Following '+creator.name+'!');
+      }
+      update();await loadFollowCounts(uid);
+    }catch(e){msg('Follow failed: '+e.message)}finally{btn.disabled=false}
+  });row.append(avatar,name,btn);return row;
+}
+async function loadFollowCounts(uid){
+  const [followers,following]=await Promise.all([
+    db.from('follows').select('follower_id').eq('following_id',uid),
+    db.from('follows').select('following_id').eq('follower_id',uid)
+  ]);
+  if(user?.id!==uid)return null;
+  if(followers.error||following.error){
+    $('profileFollowers').textContent='—';$('profileFollowing').textContent='—';
+    $('followersList').textContent='Followers require the Supabase follows-table setup.';
+    return null;
+  }
+  $('profileFollowers').textContent=followers.data.length.toLocaleString();
+  $('profileFollowing').textContent=following.data.length.toLocaleString();
+  return {followers:followers.data,following:following.data};
+}
+async function loadSocialProfile(){
+  if(!db||!user||socialLoading)return;
+  socialLoading=true;const uid=user.id;
+  try{
+    const [relationship,tracks,investments]=await Promise.all([
+      loadFollowCounts(uid),
+      db.from('songs').select('id,title,artist,user_id,file_path').order('created_at',{ascending:false}).limit(200),
+      db.from('investments').select('amount,song_id,created_at,sold_at').eq('user_id',uid).order('created_at',{ascending:false}).limit(5)
+    ]);
+    if(user?.id!==uid)return;
+    socialNames.clear();const allSongs=tracks.data||[];
+    for(const song of allSongs){if(song.user_id&&!socialNames.has(song.user_id))socialNames.set(song.user_id,song.artist||'SoundVest artist')}
+    const own=allSongs.filter(s=>s.user_id===uid);
+    $('profileUploads').textContent=tracks.error?'—':own.length.toLocaleString();
+    const ownEl=$('mySongs');ownEl.replaceChildren();
+    if(tracks.error)ownEl.textContent='Unable to load music: '+tracks.error.message;
+    else if(!own.length)ownEl.textContent='You have not uploaded any music yet.';
+    else for(const song of own){const row=document.createElement('div');row.className='song';const name=document.createElement('strong');name.textContent=song.title;const audio=document.createElement('audio');audio.controls=true;audio.preload='none';audio.src=db.storage.from('Songs').getPublicUrl(song.file_path).data.publicUrl;const cell=document.createElement('div');cell.className='songinfo';cell.append(name,audio);row.append(cell);ownEl.append(row)}
+    const recent=$('profileInvestments');recent.replaceChildren();
+    if(investments.error)recent.textContent='Could not load investments: '+investments.error.message;
+    else if(!investments.data.length)recent.textContent='No investments yet.';
+    else{
+      const titles=new Map(allSongs.map(s=>[s.id,s.title]));
+      for(const inv of investments.data){const row=document.createElement('div');row.className='song';row.textContent=(titles.get(inv.song_id)||'A supported track')+' · '+Number(inv.amount).toLocaleString()+' SV'+(inv.sold_at?' (sold)':' (held)');recent.append(row)}
+    }
+    const list=$('creatorList');list.replaceChildren();
+    if(tracks.error){list.textContent='Unable to discover artists: '+tracks.error.message;}
+    else if(!relationship){list.textContent='To enable following, run the included follows-table SQL in Supabase.';}
+    else{
+      const following=new Set(relationship.following.map(x=>x.following_id));
+      const creators=[...socialNames].filter(([id])=>id!==uid).map(([id,name])=>({id,name}));
+      function draw(){list.replaceChildren();const term=$('creatorSearch').value.trim().toLowerCase();const filtered=creators.filter(c=>c.name.toLowerCase().includes(term));if(!filtered.length)list.textContent='No other uploaded artists match yet.';for(const c of filtered)list.append(creatorRow(c,following,uid))}
+      $('creatorSearch').oninput=draw;draw();
+      const followers=$('followersList');followers.replaceChildren();
+      if(!relationship.followers.length)followers.textContent='No followers yet. Share your music to get discovered!';
+      for(const entry of relationship.followers){const row=document.createElement('div');row.className='creator';const label=document.createElement('span');label.textContent=socialNames.get(entry.follower_id)||'SoundVest listener';row.append(label);followers.append(row)}
+    }
+  }catch(e){console.error(e);$('creatorList').textContent='Could not load profile: '+e.message}
+  finally{socialLoading=false}
+}
+$('search').addEventListener('input',renderSongs);
+$('uploadForm').addEventListener('submit',async e=>{e.preventDefault();if(!requireDB())return;if(!user){status('uploadStatus','Log in from Profile before uploading.',true);return}const title=$('songTitle').value.trim(),artist=$('artist').value.trim(),file=$('audio').files[0];if(!title||!artist||!file){status('uploadStatus','Complete all fields.',true);return}const button=$('uploadButton');button.disabled=true;status('uploadStatus','Uploading audio…');try{const path=user.id+'/'+crypto.randomUUID()+'-'+file.name.replace(/[^a-zA-Z0-9._-]/g,'_');const {error:uploadError}=await db.storage.from('Songs').upload(path,file,{contentType:file.type||'audio/mpeg'});if(uploadError)throw uploadError;const {error:insertError}=await db.from('songs').insert({user_id:user.id,title,artist,file_path:path});if(insertError)throw Error('Audio uploaded, but track registration failed: '+insertError.message);status('uploadStatus','Published successfully!');$('uploadForm').reset();songs=[];await loadSongs(true);msg('Your track is live in Discover!');if(active==='profile')await loadSocialProfile()}catch(err){status('uploadStatus',err.message,true)}finally{button.disabled=false}});
+async function auth(mode){if(!requireDB())return;const email=$('email').value.trim(),password=$('password').value;if(!email||!password){status('authStatus','Enter your email and password.',true);return}status('authStatus',mode==='login'?'Signing in…':'Creating account…');try{const {data,error}=mode==='login'?await db.auth.signInWithPassword({email,password}):await db.auth.signUp({email,password});if(error)throw error;if(mode==='signup'){status('authStatus',data.session?'Account created!':'Check your email to confirm your account.')}else{status('authStatus','Signed in!');if(data.user)setUser(data.user);await loadBalance()}}catch(e){status('authStatus',e.message,true)}}
+$('login').addEventListener('click',()=>auth('login'));$('signup').addEventListener('click',()=>auth('signup'));
+$('logout').addEventListener('click',async()=>{if(!requireDB())return;const {error}=await db.auth.signOut();if(error)status('authStatus',error.message,true);else{setUser(null);status('authStatus','Logged out.')}});
+$('saveProfile').addEventListener('click',async()=>{if(!requireDB()||!user)return;const name=$('displayName').value.trim();if(!name){status('authStatus','Enter a display name.',true);return}const {data,error}=await db.auth.updateUser({data:{display_name:name,bio:$('profileBio').value.trim()}});if(error)status('authStatus',error.message,true);else{setUser(data.user);status('authStatus','Display name saved.')}});
+function init(){if(!window.supabase?.createClient){status('authStatus','Supabase script did not load. Check your connection and refresh.',true);$('discoverSongs').textContent='Connection unavailable.';return}db=window.supabase.createClient(URL,KEY);db.auth.onAuthStateChange((_event,session)=>{setUser(session?.user||null);if(active==='portfolio')setTimeout(loadPortfolio,0);if(active==='profile')setTimeout(loadSocialProfile,0)});db.auth.getUser().then(({data,error})=>{if(error)console.warn(error);setUser(data?.user||null)}).catch(console.error);loadSongs();}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
+})();
+</script></body></html>
