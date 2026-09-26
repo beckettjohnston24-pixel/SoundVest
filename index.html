@@ -347,7 +347,12 @@ async function loadSVBalance() {
     }
 
     counter.textContent =
-        Number(data.sv_balance).toLocaleString();
+    const available = document.getElementById('available');
+
+if (available) {
+    available.textContent =
+        Number(data.sv_balance).toLocaleString() + ' SV';
+}    Number(data.sv_balance).toLocaleString();
 }
 async function logIn(email, password) {
   const { data, error } =
