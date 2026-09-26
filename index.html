@@ -34,7 +34,7 @@ nav{position:fixed;bottom:0;left:0;right:0;height:72px;background:#0c0c10ee;bord
 </head>
 <body>
 <div class="app">
-<header class="top"><div class="logo">Sound<span>Vest</span></div><div class="wallet">◈ <b id="sv">10,000</b> SV</div></header>
+<header class="top"><div class="logo">Sound<span>Vest</span></div><div class="wallet">◈ <b id="sv">...</b> SV</div></header>
 
 <div style="display:flex;gap:10px;padding:12px">
   <button onclick="showAuth('login')">Log In</button>
@@ -266,14 +266,15 @@ investButton.onclick = async () => {
             }
         );
 
-        if (error) {
-            alert(error.message);
-        } else {
-            alert(
-                'Investment successful! Remaining balance: '
-                + data + ' SV'
-            );
-        }
+    } else {
+    document.getElementById('sv').textContent =
+        Number(data).toLocaleString();
+
+    alert(
+        'Investment successful! Remaining balance: '
+        + data + ' SV'
+    );
+}
     } catch (error) {
         alert(error.message);
     } finally {
@@ -318,7 +319,32 @@ async function signUp(email, password) {
 
   alert("Account created! Check your email to confirm your account.");
 }
+async function loadSVBalance() {
+    const counter = document.getElementById('sv');
 
+    const { data: { user }, error: authError } =
+        await supabaseClient.auth.getUser();
+
+    if (authError || !user) {
+        counter.textContent = '—';
+        return;
+    }
+
+    const { data, error } = await supabaseClient
+        .from('profiles')
+        .select('sv_balance')
+        .eq('id', user.id)
+        .single();
+
+    if (error || !data) {
+        counter.textContent = '—';
+        console.error('Balance loading failed:', error);
+        return;
+    }
+
+    counter.textContent =
+        Number(data.sv_balance).toLocaleString();
+}
 async function logIn(email, password) {
   const { data, error } =
     await supabaseClient.auth.signInWithPassword({
@@ -330,7 +356,7 @@ async function logIn(email, password) {
     alert(error.message);
     return;
   }
-
+await loadSVBalance();
   alert("Welcome to SoundVest!");
 }
 
@@ -388,5 +414,15 @@ async function editProfile() {
 }
  
 </script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    loadSVBalance();
+});
 
+supabaseClient.auth.onAuthStateChange(() => {
+    setTimeout(() => {
+        loadSVBalance();
+    }, 0);
+});
+</script>
 </body></html>
