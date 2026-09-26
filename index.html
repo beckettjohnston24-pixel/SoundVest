@@ -218,7 +218,59 @@ async function publish() {
   alert('Song uploaded successfully!');
 }
 
-function search(){const q=document.getElementById('searchInput').value.trim();toast(q?'Searching for '+q:'Type something to search')}
+async function loadDiscoverSongs() {
+  const container = document.getElementById('discoverSongs');
+
+  const { data, error } = await supabaseClient
+    .from('songs')
+    .select('title, artist, file_path')
+    .order('created_at', { ascending: false });
+
+  if (error) {
+    console.error(error);
+    container.textContent = 'Could not load songs.';
+    return;
+  }
+
+  container.innerHTML = '';
+
+  for (const song of data) {
+    const card = document.createElement('div');
+    card.className = 'card';
+
+    const title = document.createElement('h2');
+    title.textContent = song.title;
+
+    const artist = document.createElement('p');
+    artist.textContent = song.artist;
+
+    const audio = document.createElement('audio');
+    audio.controls = true;
+    audio.src = supabaseClient.storage
+      .from('Songs')
+      .getPublicUrl(song.file_path).data.publicUrl;
+
+    card.append(title, artist, audio);
+    container.appendChild(card);
+  }
+}
+
+async function search() {
+  const query = document.getElementById('searchInput')
+    .value.toLowerCase().trim();
+
+  await loadDiscoverSongs();
+
+  document.querySelectorAll('#discoverSongs .card')
+    .forEach(card => {
+      card.style.display =
+        card.textContent.toLowerCase().includes(query)
+          ? ''
+          : 'none';
+    });
+}
+
+document.addEventListener('DOMContentLoaded', loadDiscoverSongs);
 </script>
 
 <script>
